@@ -1,5 +1,6 @@
 package com.project_adventure.lab.controllers;
 
+import com.project_adventure.lab.dtos.FranchisePatchDTO;
 import com.project_adventure.lab.models.Franchise;
 import com.project_adventure.lab.services.FranchiseService;
 import jakarta.validation.Valid;
@@ -37,15 +38,13 @@ public class FranchiseController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Franchise updateFranchise(@PathVariable Long id, @RequestBody @Valid Franchise franchise){
-        System.out.println("hola?");
         return franchiseService.updateFranchise(id, franchise);
     }
 
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Franchise updateFranchise(@PathVariable Long id, @RequestBody FranchiseDTO franchise){
-        System.out.println("hola?");
-        return franchiseService.updateFranchise(id, franchise);
+    public Franchise patchFranchise(@PathVariable Long id, @RequestBody FranchisePatchDTO franchise){
+        return franchiseService.patchFranchise(id, franchise);
     }
 
 }
