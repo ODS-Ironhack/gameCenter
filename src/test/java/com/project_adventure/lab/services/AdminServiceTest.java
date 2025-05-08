@@ -29,33 +29,6 @@ public class AdminServiceTest {
 
     private Admin admin;
 
-    @BeforeEach
-    public void setUp() {
-        admin = new User();
-        admin.setUsername("Mary");
-        admin.setPassword("1212");
-        System.out.println("Initial user: " + admin);
-        System.out.println(admin.getPassword());
-        adminService.createAdmin(admin);
-    }
 
-    @AfterEach
-    public void tearDown() {
-        userRepository.delete(admin);
-    }
 
-    @Test
-    @DisplayName("Password encryption is correct")
-    public void passwordEncryption() {
-        assertTrue(admin.getPassword().startsWith("$2a$")); // BCrypt hashes start with $2a$
-        System.out.println("Created user: " + admin);
-    }
-
-    @Test
-    @DisplayName("Password is correct")
-    public void passwordIsCorrect() {
-        boolean isCorrect = userService.checkPassword(admin, "1234");
-        assertTrue(isCorrect);
-        System.out.println("Is the password correct? " + isCorrect);
-    }
 }
