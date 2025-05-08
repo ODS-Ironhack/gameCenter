@@ -6,10 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
-
 @Entity
 @Data
 @AllArgsConstructor
@@ -26,6 +22,7 @@ public abstract class User {
     @NotNull
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Collection<Role> roles = new ArrayList<>();
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    protected ERole role;
 }

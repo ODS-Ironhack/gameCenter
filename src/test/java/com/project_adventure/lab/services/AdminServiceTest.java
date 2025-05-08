@@ -1,6 +1,7 @@
 package com.project_adventure.lab.services;
 
 import com.project_adventure.lab.models.Admin;
+import com.project_adventure.lab.models.User;
 import com.project_adventure.lab.repositories.AdminRepository;
 import com.project_adventure.lab.repositories.UserRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -30,7 +31,7 @@ public class AdminServiceTest {
 
     @BeforeEach
     public void setUp() {
-        admin = new Admin();
+        admin = new User();
         admin.setUsername("Mary");
         admin.setPassword("1212");
         System.out.println("Initial user: " + admin);

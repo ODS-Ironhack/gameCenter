@@ -1,25 +1,21 @@
 package com.project_adventure.lab.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.Collection;
 
 @Entity
 @Data
-@AllArgsConstructor
 public class Admin extends User {
 
-
     public Admin(){
-        var roles = new ArrayList<Role>();
-        var role = new Role();
-        role.setName(ERole.ROLE_EDITOR);
-        roles.add(role);
-        setRoles(roles);
+        setRole(ERole.ROLE_CREATOR);
     };
+
+    public void setRole(ERole role){
+        if (role == ERole.ROLE_EDITOR || role == ERole.ROLE_CREATOR) {
+            this.role = role;
+        } else {
+            throw new IllegalArgumentException("Invalid role for Admin: " + role);
+        }
+    }
 }
