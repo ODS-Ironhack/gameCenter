@@ -1,6 +1,7 @@
 package com.project_adventure.lab.controllers;
 
 import com.project_adventure.lab.dtos.FranchisePatchDTO;
+import com.project_adventure.lab.dtos.GamePatchDTO;
 import com.project_adventure.lab.models.Franchise;
 import com.project_adventure.lab.models.Game;
 import com.project_adventure.lab.services.GameService;
@@ -36,6 +37,17 @@ public class GameController {
         return gameService.createGame(game);
     }
 
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Game updateGame(@PathVariable Long id, @RequestBody @Valid Game game){
+        return gameService.updateGame(id, game);
+    }
+
+    @PatchMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Game patchGame(@PathVariable Long id, @RequestBody GamePatchDTO game){
+        return gameService.patchGame(id, game);
+    }
 
 
 
