@@ -14,10 +14,10 @@ import java.util.Collection;
 @AllArgsConstructor
 public class Player extends User {
 
-    @Enumerated(EnumType.STRING)
-    private PlayerType playerType;
-
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Game> games = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Collection<Role> roles = new ArrayList<>();
 
 }
