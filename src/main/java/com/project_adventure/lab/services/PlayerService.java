@@ -16,6 +16,6 @@ public class PlayerService {
 
     public Player createPlayer(Player player) {
        //player.setRole(ERole.PLAYER);
-        return (Player) userService.createUser(player);
+        return player;
     }
 }

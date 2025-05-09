@@ -14,7 +14,4 @@ public class AdminService {
     @Autowired
     private AdminRepository adminRepository;
 
-    public Admin createAdmin(Admin admin){
-        return (Admin) userService.createUser(admin);
-    }
 }

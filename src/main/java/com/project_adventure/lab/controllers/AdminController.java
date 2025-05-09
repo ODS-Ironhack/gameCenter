@@ -15,9 +15,5 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Admin createAdmin(@Valid @RequestBody Admin admin){
-        return adminService.createAdmin(admin);
-    }
+
 }
