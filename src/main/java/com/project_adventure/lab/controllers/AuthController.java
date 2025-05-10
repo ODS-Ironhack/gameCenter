@@ -34,8 +34,9 @@ public class AuthController {
 
             if(userService.checkPassword(foundUser,user.getPassword())){
                 String token = jwtService.generateToken(foundUser.getUsername(),
-                        foundUser.getRole());
-                return ResponseEntity.status(HttpStatus.OK).body("Login correct");
+                        foundUser.getRole().name());
+
+                return ResponseEntity.ok(token);
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login incorrect");
             }

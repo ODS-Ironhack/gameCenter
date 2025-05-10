@@ -21,6 +21,6 @@ public class JwtServiceTest {
     void generateToken(){
        String token = jwtService.generateToken("Luisa", ERole.ROLE_EDITOR);
 
-        System.out.println(token);
+        System.out.println("Token: " + token);
     }
 }

@@ -11,10 +11,10 @@ import java.util.Date;
 public class JwtService {
     private static final String SECRET = "secret_key";
 
-    public String generateToken(String username, ERole role){
+    public String generateToken(String username, String role){
         return JWT.create()
                 .withSubject(username)
-                .withClaim("role", role.ordinal())
+                .withClaim("role", role)
                 .withIssuedAt(new Date())
                 .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
                 .sign(Algorithm.HMAC256(SECRET));
