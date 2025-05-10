@@ -1,6 +1,7 @@
 package com.project_adventure.lab.services;
 
 import com.project_adventure.lab.models.Admin;
+import com.project_adventure.lab.models.ERole;
 import com.project_adventure.lab.models.Player;
 import com.project_adventure.lab.repositories.AdminRepository;
 import com.project_adventure.lab.repositories.PlayerRepository;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.parameters.P;
+import org.springframework.test.annotation.Rollback;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -30,7 +32,7 @@ public class UserServiceTest {
         player = new Player();
         player.setUsername("Gabi");
         player.setPassword("7777");
-        System.out.println("Initial player: " + player);
+        System.out.println("Initial player: " + player + player.getPassword());
         userService.saveUser(player, playerRepository);
     }
 
@@ -39,11 +41,15 @@ public class UserServiceTest {
         playerRepository.delete(player);
     }
 
+
+    @Autowired
+    private AdminRepository adminRepository;
+
     @Test
     @DisplayName("Password encryption is correct")
     public void passwordEncryption(){
         assertTrue(player.getPassword().startsWith("$2a$"));
-        System.out.println("Created player: " + player);
+        System.out.println("Created player: " + player + " " + player.getPassword());
     }
 
     @Test

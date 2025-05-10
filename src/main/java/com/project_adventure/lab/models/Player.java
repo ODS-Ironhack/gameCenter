@@ -11,7 +11,7 @@ import java.util.Collection;
 @Entity
 @Data
 @AllArgsConstructor
-@ToString(callSuper = true) //al hacer print de player saldrán los atributos del super también.
+@ToString(callSuper = true)//al hacer print de player saldrán los atributos del super también.
 public class Player extends User {
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -20,5 +20,7 @@ public class Player extends User {
     public Player() {
         this.setRole(ERole.ROLE_PLAYER);
     }
+
+    private int credit;
 
 }

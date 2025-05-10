@@ -1,6 +1,10 @@
 package com.project_adventure.lab.services;
 
+import com.project_adventure.lab.models.Admin;
+import com.project_adventure.lab.models.Player;
 import com.project_adventure.lab.models.User;
+import com.project_adventure.lab.repositories.AdminRepository;
+import com.project_adventure.lab.repositories.PlayerRepository;
 import com.project_adventure.lab.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,6 +21,12 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private PlayerRepository playerRepository;
+
+    @Autowired
+    private AdminRepository adminRepository;
+
 
     // De esta manera puedo pasar como argumentos un player o admin y un repository de cualquiera de los dos para hacer save
     public <T extends User> T saveUser(T user, JpaRepository<T, Long> repository) {
@@ -29,6 +39,14 @@ public class UserService {
     }
 
     public Optional<User> findByUsername(String username) {
-        return userRepository.findByUsername(username);
+        Optional<Player> player = playerRepository.findByUsername(username);
+        if (player.isPresent()) {
+            return Optional.of(player.get()); // hay que devolver un optional de User, no vale devolver el opt de player
+        }
+        Optional<Admin> admin = adminRepository.findByUsername(username);
+        if (admin.isPresent()) {
+            return Optional.of(admin.get());
+        }
+        return Optional.empty();
     }
 }

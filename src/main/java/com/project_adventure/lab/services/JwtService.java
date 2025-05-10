@@ -2,18 +2,22 @@ package com.project_adventure.lab.services;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.project_adventure.lab.models.ERole;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
+@Service
 public class JwtService {
     private static final String SECRET = "secret_key";
 
-    public String generateToken(String username, String roles){
+    public String generateToken(String username, ERole role){
         return JWT.create()
                 .withSubject(username)
-                .withClaim("roles", roles)
+                .withClaim("role", role.ordinal())
                 .withIssuedAt(new Date())
                 .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
                 .sign(Algorithm.HMAC256(SECRET));
     }
+
 }
