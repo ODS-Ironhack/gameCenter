@@ -34,7 +34,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String authHeader = request.getHeader("Authorization");
 
         if(authHeader == null || !authHeader.startsWith("Bearer ")){
-            filterChain.doFilter(request, response); // pasa al siguiente filtro por si hay endpoints que no están protegidos
+
+            filterChain.doFilter(request, response);
+            return;// pasa al siguiente filtro por si hay endpoints que no están protegidos
         }
 
         String token = authHeader.substring(7);
@@ -54,6 +56,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
+        System.out.println("Authenticated as: " + authentication.getAuthorities());
         filterChain.doFilter(request, response);
     }
 
@@ -62,6 +65,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return Collections.emptyList();
         }
 
-        return List.of(new SimpleGrantedAuthority(roleString.trim()));
+        System.out.println("Role string: " + roleString);
+        Collection<GrantedAuthority> listRole = List.of(new SimpleGrantedAuthority(roleString.trim()));
+        return listRole;
     }
 }

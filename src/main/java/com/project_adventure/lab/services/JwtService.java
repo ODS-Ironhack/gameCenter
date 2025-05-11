@@ -25,8 +25,10 @@ public class JwtService {
     public boolean validateToken(String token) {
         try {
             JWT.require(Algorithm.HMAC256(SECRET)).build().verify(token);
+            System.out.println("Token válido");
             return true;
         } catch (JWTVerificationException e) {
+            System.out.println("Token inválido");
             return false;
         }
     }

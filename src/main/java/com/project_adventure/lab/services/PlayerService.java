@@ -5,6 +5,8 @@ import com.project_adventure.lab.repositories.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PlayerService {
 
@@ -17,5 +19,9 @@ public class PlayerService {
     public Player createPlayer(Player player) {
        //player.setRole(ERole.PLAYER);
         return player;
+    }
+
+    public List<Player> getAllPlayers(){
+        return playerRepository.findAll();
     }
 }
