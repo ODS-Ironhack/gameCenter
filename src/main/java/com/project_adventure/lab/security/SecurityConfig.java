@@ -4,6 +4,7 @@ import com.project_adventure.lab.filters.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,7 +29,10 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/public/**").permitAll()
                         // Routes protected by role
-                        .requestMatchers("/api/admin").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/game").hasRole("CREATOR")
+                        .requestMatchers(HttpMethod.PUT, "/api/game/**").hasRole("EDITOR")
+                        .requestMatchers(HttpMethod.DELETE, "/api/game/**").hasRole("EDITOR")
+                        .requestMatchers("/api/player/**").hasRole("PLAYER")
                         // All other routes require authentication
                         .anyRequest().authenticated()
                 )
