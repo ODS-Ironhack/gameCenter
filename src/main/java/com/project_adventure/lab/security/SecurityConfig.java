@@ -29,9 +29,17 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/public/**").permitAll()
                         // Routes protected by role
+                        .requestMatchers(HttpMethod.GET, "/api/franchise/").hasAnyRole("CREATOR", "EDITOR", "PLAYER")
+                        .requestMatchers(HttpMethod.GET, "/api/game/").hasAnyRole("CREATOR", "EDITOR", "PLAYER")
+
                         .requestMatchers(HttpMethod.POST, "/api/game").hasRole("CREATOR")
+                        .requestMatchers(HttpMethod.POST, "/api/franchise").hasRole("CREATOR")
+
                         .requestMatchers(HttpMethod.PUT, "/api/game/**").hasRole("EDITOR")
+                        .requestMatchers(HttpMethod.PUT, "/api/franchise/**").hasRole("EDITOR")
+                        .requestMatchers(HttpMethod.PUT, "/api/player/**").hasRole("EDITOR")
                         .requestMatchers(HttpMethod.DELETE, "/api/game/**").hasRole("EDITOR")
+
                         .requestMatchers("/api/player/**").hasRole("PLAYER")
                         // All other routes require authentication
                         .anyRequest().authenticated()
