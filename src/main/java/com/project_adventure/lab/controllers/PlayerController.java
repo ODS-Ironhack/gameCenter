@@ -23,4 +23,10 @@ public class PlayerController {
     public List<Player> getAllGames(){
         return playerService.getAllPlayers();
     }
+
+    @GetMapping("/{username}")
+    @ResponseStatus(HttpStatus.OK)
+    public Player getPlayerByUsername(@PathVariable String username){
+
+    }
 }
