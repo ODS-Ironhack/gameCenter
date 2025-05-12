@@ -44,28 +44,14 @@ public class GameService {
         return gameRepository.findById(id).orElseThrow(() -> new RuntimeException("There is no game by id: "+ id));
     }
 
-    //TODO dudas con este método.
     public Game updateGame(Long id, Game newGame) {
         Game existingGame = gameRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("There is no game by id: " + id));
 
-        newGame.setId(id);
+            newGame.setId(id);
+            newGame.setFranchise(existingGame.getFranchise());
 
-        Franchise incomingFranchise = newGame.getFranchise();
-        Franchise existingFranchise = existingGame.getFranchise();
-
-        if (incomingFranchise == null) {
-            newGame.setFranchise(null);
-        } else if (incomingFranchise.getId() != null) {
-            newGame.setFranchise(incomingFranchise);
-        } else if (existingFranchise != null && existingFranchise.getId() != null) {
-            incomingFranchise.setId(existingFranchise.getId());
-            newGame.setFranchise(incomingFranchise);
-        } else {
-            throw new RuntimeException("No previous franchise ID nor current franchise ID to assign to the incoming franchise");
-        }
-
-        return gameRepository.save(newGame);
+            return gameRepository.save(newGame);
     }
 
     public Game patchGame(Long id, GamePatchDTO gameDTO) {
