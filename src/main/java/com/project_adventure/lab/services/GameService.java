@@ -28,14 +28,31 @@ public class GameService {
     public Game createGame(Game game) {
         Franchise franchise = game.getFranchise();
 
-        if(franchise!=null){
-           Optional<Franchise> existentFranchise = franchiseRepository.findByName(franchise.getName());
-           if(existentFranchise.isPresent()){
-           game.setFranchise(existentFranchise.get());}
-           else {
-               franchiseRepository.save(franchise);
-           }
+        if (franchise != null) {
+            if (franchise.getId() != null) {
+                Optional<Franchise> existentFranchise = franchiseRepository.findById(franchise.getId());
+                if (existentFranchise.isPresent()) {
+                    game.setFranchise(existentFranchise.get());
+                } else {
+                    throw new IllegalArgumentException("Franchise with ID " + franchise.getId() + " not found.");
+                }
+            }
+            else if (franchise.getName() != null) {
+                Optional<Franchise> existentFranchise = franchiseRepository.findByName(franchise.getName());
+                if (existentFranchise.isPresent()) {
+                    game.setFranchise(existentFranchise.get());
+                } else {
+                    if (franchise.getDescription() == null) {
+                        throw new IllegalArgumentException("Description must not be null when creating a new Franchise.");
+                    }
+                    franchiseRepository.save(franchise);
+                    game.setFranchise(franchise);
+                }
+            } else {
+                throw new IllegalArgumentException("Franchise must have at least an ID or a name.");
+            }
         }
+
         return gameRepository.save(game);
     }
 

@@ -2,7 +2,6 @@ package com.project_adventure.lab.controllers;
 
 
 import com.project_adventure.lab.dtos.PlayerPublicDTO;
-import com.project_adventure.lab.models.Franchise;
 import com.project_adventure.lab.models.Game;
 import com.project_adventure.lab.models.Player;
 import com.project_adventure.lab.services.PlayerService;

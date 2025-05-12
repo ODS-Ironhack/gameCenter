@@ -27,7 +27,6 @@ public class UserService {
     @Autowired
     private AdminRepository adminRepository;
 
-
     // De esta manera puedo pasar como argumentos un player o admin y un repository de cualquiera de los dos para hacer save
     public <T extends User> T saveUser(T user, JpaRepository<T, Long> repository) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
