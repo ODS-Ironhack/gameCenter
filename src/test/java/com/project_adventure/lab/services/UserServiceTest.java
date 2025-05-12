@@ -1,19 +1,14 @@
 package com.project_adventure.lab.services;
 
-import com.project_adventure.lab.models.Admin;
-import com.project_adventure.lab.models.ERole;
 import com.project_adventure.lab.models.Player;
 import com.project_adventure.lab.repositories.AdminRepository;
 import com.project_adventure.lab.repositories.PlayerRepository;
-import com.project_adventure.lab.repositories.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.core.parameters.P;
-import org.springframework.test.annotation.Rollback;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -47,15 +42,17 @@ public class UserServiceTest {
 
     @Test
     @DisplayName("Password encryption is correct")
-    public void passwordEncryption(){
+    public void passwordEncryptionTest(){
         assertTrue(player.getPassword().startsWith("$2a$"));
         System.out.println("Created player: " + player + " " + player.getPassword());
     }
 
     @Test
     @DisplayName("Password is correct")
-    public void passwordIsCorrect(){
+    public void checkPasswordTest(){
+        String rawPassword= "7777";
+        boolean isPassCorrect = userService.checkPassword(player, rawPassword);
 
-
+        assertTrue(isPassCorrect);
     }
 }

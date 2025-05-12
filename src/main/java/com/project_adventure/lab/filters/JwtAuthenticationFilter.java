@@ -3,24 +3,21 @@ package com.project_adventure.lab.filters;
 import com.project_adventure.lab.services.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -44,7 +41,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (!jwtService.validateToken(token)) {
             filterChain.doFilter(request, response);
             return;
-            //porque??
         }
 
         String username= jwtService.extractUsername(token);
@@ -57,7 +53,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        System.out.println("Authenticated as: " + authentication.getAuthorities());
         filterChain.doFilter(request, response);
     }
 
@@ -66,7 +61,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return Collections.emptyList();
         }
 
-        System.out.println("Role string: " + roleString);
         Collection<GrantedAuthority> listRole = List.of(new SimpleGrantedAuthority(roleString.trim()));
         return listRole;
     }

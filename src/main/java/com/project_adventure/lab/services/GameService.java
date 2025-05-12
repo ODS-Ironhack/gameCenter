@@ -3,6 +3,7 @@ package com.project_adventure.lab.services;
 import com.project_adventure.lab.dtos.FranchisePatchDTO;
 import com.project_adventure.lab.dtos.GamePatchDTO;
 import com.project_adventure.lab.exceptions.FranchiseDescriptionMissingException;
+import com.project_adventure.lab.exceptions.FranchiseInfoMissingException;
 import com.project_adventure.lab.exceptions.GameNotFoundException;
 import com.project_adventure.lab.models.Franchise;
 import com.project_adventure.lab.models.Game;
@@ -51,7 +52,7 @@ public class GameService {
                     game.setFranchise(franchise);
                 }
             } else {
-                throw new IllegalArgumentException("Franchise must have at least an ID or a name.");
+                throw new FranchiseInfoMissingException();
             }
         }
 

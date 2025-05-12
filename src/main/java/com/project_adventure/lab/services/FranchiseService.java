@@ -26,7 +26,9 @@ public class FranchiseService {
         Optional<Franchise> existing = franchiseRepository.findByName(franchise.getName());
 
         if (existing.isPresent()) {
+            System.out.println("Esto ya existe");
             throw new FranchiseAlreadyExistsException(franchise.getName());
+
         }
 
         return franchiseRepository.save(franchise);
