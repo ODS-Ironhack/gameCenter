@@ -2,6 +2,8 @@ package com.project_adventure.lab.services;
 
 import com.project_adventure.lab.dtos.FranchisePatchDTO;
 import com.project_adventure.lab.dtos.GamePatchDTO;
+import com.project_adventure.lab.exceptions.FranchiseDescriptionMissingException;
+import com.project_adventure.lab.exceptions.GameNotFoundException;
 import com.project_adventure.lab.models.Franchise;
 import com.project_adventure.lab.models.Game;
 import com.project_adventure.lab.repositories.FranchiseRepository;
@@ -34,7 +36,7 @@ public class GameService {
                 if (existentFranchise.isPresent()) {
                     game.setFranchise(existentFranchise.get());
                 } else {
-                    throw new IllegalArgumentException("Franchise with ID " + franchise.getId() + " not found.");
+                    throw new GameNotFoundException(franchise.getId());
                 }
             }
             else if (franchise.getName() != null) {
@@ -43,7 +45,7 @@ public class GameService {
                     game.setFranchise(existentFranchise.get());
                 } else {
                     if (franchise.getDescription() == null) {
-                        throw new IllegalArgumentException("Description must not be null when creating a new Franchise.");
+                        throw new FranchiseDescriptionMissingException();
                     }
                     franchiseRepository.save(franchise);
                     game.setFranchise(franchise);
@@ -57,13 +59,12 @@ public class GameService {
     }
 
     public Game getGameById(Long id) {
-        //TODO crear excepcion personalizada
-        return gameRepository.findById(id).orElseThrow(() -> new RuntimeException("There is no game by id: "+ id));
+        return gameRepository.findById(id).orElseThrow(() -> new GameNotFoundException(id));
     }
 
     public Game updateGame(Long id, Game newGame) {
         Game existingGame = gameRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("There is no game by id: " + id));
+                .orElseThrow(() -> new GameNotFoundException(id));
 
             newGame.setId(id);
             newGame.setFranchise(existingGame.getFranchise());
@@ -72,9 +73,9 @@ public class GameService {
     }
 
     public Game patchGame(Long id, GamePatchDTO gameDTO) {
-        //TODO crear excepcion personalizada
+
         Game existingGame = gameRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("There is no game by id: "+ id));
+                .orElseThrow(() -> new GameNotFoundException(id));
         if(gameDTO.getName()!= null){
             existingGame.setName(gameDTO.getName());
         } else if(gameDTO.getDescription()!= null){
