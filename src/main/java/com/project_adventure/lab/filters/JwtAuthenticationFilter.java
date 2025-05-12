@@ -44,6 +44,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (!jwtService.validateToken(token)) {
             filterChain.doFilter(request, response);
             return;
+            //porque??
         }
 
         String username= jwtService.extractUsername(token);

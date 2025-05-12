@@ -1,11 +1,14 @@
 package com.project_adventure.lab.services;
 
+import com.project_adventure.lab.dtos.PlayerPublicDTO;
+import com.project_adventure.lab.models.Game;
 import com.project_adventure.lab.models.Player;
 import com.project_adventure.lab.repositories.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PlayerService {
@@ -23,5 +26,11 @@ public class PlayerService {
 
     public List<Player> getAllPlayers(){
         return playerRepository.findAll();
+    }
+
+    public PlayerPublicDTO getPlayerByUsername(String username) {
+        return playerRepository.findByUsername(username)
+                .map(player -> new PlayerPublicDTO(player.getUsername(), (List<Game>) player.getGames()))
+                .orElseThrow(() -> new RuntimeException("Player not found"));
     }
 }

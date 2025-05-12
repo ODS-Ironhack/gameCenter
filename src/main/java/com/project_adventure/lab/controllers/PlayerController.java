@@ -1,8 +1,9 @@
 package com.project_adventure.lab.controllers;
 
 
+import com.project_adventure.lab.dtos.PlayerPublicDTO;
+import com.project_adventure.lab.models.Game;
 import com.project_adventure.lab.models.Player;
-import com.project_adventure.lab.services.GameService;
 import com.project_adventure.lab.services.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,9 +25,15 @@ public class PlayerController {
         return playerService.getAllPlayers();
     }
 
-    @GetMapping("/{username}")
+    @GetMapping("/username")
     @ResponseStatus(HttpStatus.OK)
-    public Player getPlayerByUsername(@PathVariable String username){
+    public PlayerPublicDTO getPlayerByUsername(@RequestParam String username) {
+        return playerService.getPlayerByUsername(username);
+    }
 
+    @GetMapping("/username/games")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Game> getPlayerGames(@RequestParam String username) {
+        return playerService.getPlayerByUsername(username).getGames();
     }
 }

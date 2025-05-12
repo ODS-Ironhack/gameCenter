@@ -19,11 +19,15 @@ public class FranchiseController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Franchise> getAllFranchises(){
-        return franchiseService.getAllFranchises();
+    public List<Franchise> getAllFranchises(@RequestParam(required = false) String name){
+        if (name != null){
+            return List.of(franchiseService.getFranchiseByName(name));
+        } else {
+            return franchiseService.getAllFranchises();
+        }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Franchise getFranchiseById(@PathVariable Long id){
         return franchiseService.getFranchiseById(id);
@@ -46,5 +50,7 @@ public class FranchiseController {
     public Franchise patchFranchise(@PathVariable Long id, @RequestBody FranchisePatchDTO franchise){
         return franchiseService.patchFranchise(id, franchise);
     }
+
+
 
 }

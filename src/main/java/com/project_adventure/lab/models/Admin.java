@@ -1,11 +1,19 @@
 package com.project_adventure.lab.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Entity
 @Data
 public class Admin extends User {
+
+    @NotNull
+    private String name;
+
+    @NotNull
+    private String surname;
 
     public Admin(){
         setRole(ERole.ROLE_CREATOR);

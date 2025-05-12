@@ -27,6 +27,11 @@ public class FranchiseService {
         return franchiseRepository.findById(id).orElseThrow(() -> new RuntimeException("There is no franchise by id: "+ id));
     }
 
+    public Franchise getFranchiseByName(String name) {
+        //TODO crear excepcion personalizada
+        return franchiseRepository.findByName(name).orElseThrow(() -> new RuntimeException("There is no franchise by the name: "+ name));
+    }
+
     public Franchise updateFranchise(Long id, Franchise newFranchise) {
         //TODO crear excepcion personalizada?
         Franchise existingFranchise = franchiseRepository.findById(id).orElseThrow(() -> new RuntimeException("There is no franchise by id: "+ id));
@@ -44,4 +49,5 @@ public class FranchiseService {
         }
         return franchiseRepository.save(existingFranchise);
     }
+
 }

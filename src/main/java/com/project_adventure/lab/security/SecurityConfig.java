@@ -25,12 +25,10 @@ public class SecurityConfig {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // Public routes
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/public/**").permitAll()
-                        // Routes protected by role
-                        .requestMatchers(HttpMethod.GET, "/api/franchise/").hasAnyRole("CREATOR", "EDITOR", "PLAYER")
-                        .requestMatchers(HttpMethod.GET, "/api/game/").hasAnyRole("CREATOR", "EDITOR", "PLAYER")
+
+                        .requestMatchers(HttpMethod.GET, "/api/franchise/**").hasAnyRole("CREATOR", "EDITOR", "PLAYER")
+                        .requestMatchers(HttpMethod.GET, "/api/game/**").hasAnyRole("CREATOR", "EDITOR", "PLAYER")
 
                         .requestMatchers(HttpMethod.POST, "/api/game").hasRole("CREATOR")
                         .requestMatchers(HttpMethod.POST, "/api/franchise").hasRole("CREATOR")
@@ -40,9 +38,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/player/**").hasRole("EDITOR")
                         .requestMatchers(HttpMethod.DELETE, "/api/game/**").hasRole("EDITOR")
 
-                        .requestMatchers("/api/player/**").hasRole("PLAYER")
+                        .requestMatchers(HttpMethod.GET,"/api/player/username/**").hasRole("PLAYER")
                         // All other routes require authentication
-                        .anyRequest().authenticated()
+                        .anyRequest().denyAll()
                 )
                 // Add our filter before UsernamePasswordAuthenticationFilter
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
