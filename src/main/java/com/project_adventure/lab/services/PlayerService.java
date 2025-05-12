@@ -33,4 +33,18 @@ public class PlayerService {
                 .map(player -> new PlayerPublicDTO(player.getUsername(), (List<Game>) player.getGames()))
                 .orElseThrow(() -> new RuntimeException("Player not found"));
     }
+
+    public Player getPlayerForAdmin(String username) {
+        return playerRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Player not found"));
+    }
+
+
+
+    public Player updatePlayer(Long id, PlayerPublicDTO newPlayer){
+        Player existingPlayer= playerRepository.findById(id).orElseThrow(() -> new RuntimeException("There is no player by id: "+ id));
+        existingPlayer.setGames(newPlayer.getGames());
+
+        return playerRepository.save(existingPlayer);
+    }
 }

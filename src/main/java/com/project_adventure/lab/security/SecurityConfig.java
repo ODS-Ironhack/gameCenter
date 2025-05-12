@@ -29,6 +29,7 @@ public class SecurityConfig {
 
                         .requestMatchers(HttpMethod.GET, "/api/franchise/**").hasAnyRole("CREATOR", "EDITOR", "PLAYER")
                         .requestMatchers(HttpMethod.GET, "/api/game/**").hasAnyRole("CREATOR", "EDITOR", "PLAYER")
+                        .requestMatchers(HttpMethod.GET, "/api/player/admin/**").hasAnyRole("EDITOR", "CREATOR")
 
                         .requestMatchers(HttpMethod.POST, "/api/game").hasRole("CREATOR")
                         .requestMatchers(HttpMethod.POST, "/api/franchise").hasRole("CREATOR")
