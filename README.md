@@ -9,8 +9,6 @@
 Los Admins tienen privilegios de creación y edición, mientras que los Players pueden explorar otros jugadores y poseen juegos. Este proyecto implementa autenticación con JWT, validaciones, herencia entre clases con JPA, y buenas prácticas REST.
 
 [**Presentación Game Centre**](https://www.canva.com/design/DAGnUSR4H0s/QhKcn_CFU50SfA2cVguQuw/view?utm_content=DAGnUSR4H0s&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=he8dc8c0c6d)
-### Diagrama de clases
-
 
 ###  Diagrama de clases
 
