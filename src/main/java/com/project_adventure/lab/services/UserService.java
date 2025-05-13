@@ -45,7 +45,7 @@ public class UserService {
     public Optional<User> findByUsername(String username) {
         Optional<Player> player = playerRepository.findByUsername(username);
         if (player.isPresent()) {
-            return Optional.of(player.get()); // hay que devolver un optional de User, no vale devolver el opt de player
+            return Optional.of(player.get()); // esto asegura devolver un optional de User, no servirá el opt de player
         }
         Optional<Admin> admin = adminRepository.findByUsername(username);
         if (admin.isPresent()) {
