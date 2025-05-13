@@ -1,11 +1,12 @@
 package com.project_adventure.lab.services;
 
 import com.project_adventure.lab.dtos.FranchisePatchDTO;
-import com.project_adventure.lab.exceptions.FranchiseAlreadyExistsException;
-import com.project_adventure.lab.exceptions.FranchiseNotFoundException;
+import com.project_adventure.lab.exceptions.franchiseExceptions.FranchiseAlreadyExistsException;
+import com.project_adventure.lab.exceptions.franchiseExceptions.FranchiseNotFoundException;
 import com.project_adventure.lab.models.Franchise;
 import com.project_adventure.lab.repositories.FranchiseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -56,6 +57,12 @@ public class FranchiseService {
             existingFranchise.setDescription(franchiseDTO.getDescription());
         }
         return franchiseRepository.save(existingFranchise);
+    }
+
+    public ResponseEntity<String> deleteFranchise(Long id) {
+        Franchise franchise = franchiseRepository.findById(id).orElseThrow(() -> new FranchiseNotFoundException(id));
+        franchiseRepository.delete(franchise);
+        return ResponseEntity.ok("Franchise deleted: " + franchise.getName());
     }
 
 }

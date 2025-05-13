@@ -1,4 +1,4 @@
-package com.project_adventure.lab.exceptions;
+package com.project_adventure.lab.exceptions.franchiseExceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

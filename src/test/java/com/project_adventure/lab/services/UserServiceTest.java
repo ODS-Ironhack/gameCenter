@@ -25,6 +25,7 @@ public class UserServiceTest {
     private PlayerRepository playerRepository;
 
     private Player player;
+    private Player player1;
     private Admin admin;
 
     @BeforeEach

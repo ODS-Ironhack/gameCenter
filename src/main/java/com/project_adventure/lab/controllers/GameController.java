@@ -8,6 +8,7 @@ import com.project_adventure.lab.services.GameService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -47,6 +48,12 @@ public class GameController {
     @ResponseStatus(HttpStatus.OK)
     public Game patchGame(@PathVariable Long id, @RequestBody GamePatchDTO game){
         return gameService.patchGame(id, game);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<String> deleteGame(@PathVariable Long id){
+        return gameService.deleteGame(id);
     }
 
 

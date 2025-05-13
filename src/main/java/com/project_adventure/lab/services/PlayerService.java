@@ -43,8 +43,12 @@ public class PlayerService {
 
     public Player updatePlayer(Long id, PlayerPublicDTO newPlayer){
         Player existingPlayer= playerRepository.findById(id).orElseThrow(() -> new RuntimeException("There is no player by id: "+ id));
+        if(newPlayer.getGames() != null )
         existingPlayer.setGames(newPlayer.getGames());
 
+        if(newPlayer.getUsername() != null){
+            existingPlayer.setUsername(newPlayer.getUsername());
+        }
         return playerRepository.save(existingPlayer);
     }
 }
