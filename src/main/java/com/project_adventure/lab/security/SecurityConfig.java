@@ -37,11 +37,14 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/game/**").hasRole("EDITOR")
                         .requestMatchers(HttpMethod.PUT, "/api/franchise/**").hasRole("EDITOR")
                         .requestMatchers(HttpMethod.PUT, "/api/player/**").hasRole("EDITOR")
+                        .requestMatchers(HttpMethod.PATCH, "/api/game/**").hasRole("EDITOR")
+                        .requestMatchers(HttpMethod.PATCH, "/api/franchise/**").hasRole("EDITOR")
                         .requestMatchers(HttpMethod.DELETE, "/api/game/**").hasRole("EDITOR")
+                        .requestMatchers(HttpMethod.DELETE, "/api/franchise/**").hasRole("EDITOR")
 
                         .requestMatchers(HttpMethod.GET,"/api/player/username/**").hasRole("PLAYER")
                         // All other routes require authentication
-                        .anyRequest().denyAll()
+                        .anyRequest().permitAll()
                 )
                 // Add our filter before UsernamePasswordAuthenticationFilter
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

@@ -1,15 +1,15 @@
 package com.project_adventure.lab.services;
 
-import com.project_adventure.lab.dtos.FranchisePatchDTO;
 import com.project_adventure.lab.dtos.GamePatchDTO;
-import com.project_adventure.lab.exceptions.FranchiseDescriptionMissingException;
-import com.project_adventure.lab.exceptions.FranchiseInfoMissingException;
+import com.project_adventure.lab.exceptions.franchiseExceptions.FranchiseDescriptionMissingException;
+import com.project_adventure.lab.exceptions.franchiseExceptions.FranchiseInfoMissingException;
 import com.project_adventure.lab.exceptions.GameNotFoundException;
 import com.project_adventure.lab.models.Franchise;
 import com.project_adventure.lab.models.Game;
 import com.project_adventure.lab.repositories.FranchiseRepository;
 import com.project_adventure.lab.repositories.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -87,6 +87,12 @@ public class GameService {
         existingGame.setFranchise(gameDTO.getFranchise());
         }
         return gameRepository.save(existingGame);
+    }
+
+    public ResponseEntity<String> deleteGame(Long id) {
+        Game game = gameRepository.findById(id).orElseThrow(() -> new GameNotFoundException(id));
+        gameRepository.delete(game);
+        return ResponseEntity.ok("Game deleted: " + game.getName());
     }
 
 }

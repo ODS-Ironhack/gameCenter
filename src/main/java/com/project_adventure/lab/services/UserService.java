@@ -29,6 +29,11 @@ public class UserService {
 
     // De esta manera puedo pasar como argumentos un player o admin y un repository de cualquiera de los dos para hacer save
     public <T extends User> T saveUser(T user, JpaRepository<T, Long> repository) {
+        Optional<User> existingUser = userRepository.findByUsername(user.getUsername());
+
+        if(existingUser.isPresent()){
+            throw new IllegalArgumentException("Username already exists");
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return repository.save(user);
     }
@@ -40,7 +45,7 @@ public class UserService {
     public Optional<User> findByUsername(String username) {
         Optional<Player> player = playerRepository.findByUsername(username);
         if (player.isPresent()) {
-            return Optional.of(player.get()); // hay que devolver un optional de User, no vale devolver el opt de player
+            return Optional.of(player.get()); // esto asegura devolver un optional de User, no servirá el opt de player
         }
         Optional<Admin> admin = adminRepository.findByUsername(username);
         if (admin.isPresent()) {
