@@ -29,6 +29,11 @@ public class UserService {
 
     // De esta manera puedo pasar como argumentos un player o admin y un repository de cualquiera de los dos para hacer save
     public <T extends User> T saveUser(T user, JpaRepository<T, Long> repository) {
+        Optional<User> existingUser = userRepository.findByUsername(user.getUsername());
+
+        if(existingUser.isPresent()){
+            throw new IllegalArgumentException("Username already exists");
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return repository.save(user);
     }
