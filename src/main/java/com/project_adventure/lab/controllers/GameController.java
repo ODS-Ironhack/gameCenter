@@ -56,7 +56,4 @@ public class GameController {
         return gameService.deleteGame(id);
     }
 
-
-
-
 }
